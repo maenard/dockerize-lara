@@ -1,0 +1,74 @@
+<?php
+
+namespace {{ namespace }};
+use Illuminate\Support\Facades\DB;
+
+class {{ class }} extends Repository
+{
+    /**
+     * Handles data retrieval
+     * @param array $request
+     * @return array
+     */
+    public function index(array $request) : array
+    {
+        try {
+            return [];
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage(), 'status' => 500];
+        }
+    }
+
+    /**
+     * Handles data storage
+     * @param array $request
+     * @return array
+     */
+    public function store(array $request): array
+    {
+        DB::beginTransaction();
+        try {
+            DB::commit();
+            return [];
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ['error' => $e->getMessage(), 'status' => 500];
+        }
+    }
+
+    /**
+     * Handles data updating
+     * @param array $request
+     * @param $id
+     * @return array
+     */
+    public function update(array $request, $id): array
+    {
+        DB::beginTransaction();
+        try {
+            DB::commit();
+            return [];
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ['error' => $e->getMessage(), 'status' => 500];
+        }
+    }
+
+    /**
+     * Handles data deletion
+     * @param array $request
+     * @param $id
+     * @return array
+     */
+    public function delete(array $request, $id): array
+    {
+        DB::beginTransaction();
+        try {
+            DB::commit();
+            return [];
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ['error' => $e->getMessage(), 'status' => 500];
+        }
+    }
+}

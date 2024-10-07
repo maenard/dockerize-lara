@@ -32,7 +32,7 @@ foreach ($controller_files as $controller_file) {
                 foreach ($class_methods as $key => $method) {
                     if($method->class === $controller_class && !$method->isConstructor()){
                         $doc_comment = $method->getDocComment();
-                        $http_methods = [];
+                        $http_methods = ['POST'];
                         $middlewares = [];
 
                         if ($doc_comment) {
@@ -45,8 +45,6 @@ foreach ($controller_files as $controller_file) {
                                 $middlewares = explode('|', $matches[1]);
                                 $middlewares = array_map('trim', $middlewares);
                             }
-                        }else{
-                            $http_methods = ['POST'];
                         }
 
                         $method_name = $method->getName();
@@ -70,7 +68,7 @@ foreach ($controller_files as $controller_file) {
 
                         }
 
-                        Route::match($http_methods, $end_point, [$controller_class, $method_name])->middleware($middlewares);
+                        Route::match($http_methods, $end_point, [$controller_class, $method_name == '' ? 'index' : str_replace('/', '', $method_name)])->middleware($middlewares);
                     }
                 }
             }

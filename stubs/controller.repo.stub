@@ -1,0 +1,76 @@
+<?php
+
+namespace {{ namespace }};
+use App\Http\Requests\{{ name }}\Delete;
+use App\Http\Requests\{{ name }}\Index;
+use App\Http\Requests\{{ name }}\Store;
+use App\Http\Requests\{{ name }}\Update;
+use App\Repositories\{{ repo_name }};
+use Illuminate\Http\JsonResponse;
+
+class {{ controller }} extends Controller
+{
+    protected ${{ repo_variable_name }};
+    public function __construct({{ repo_name }} ${{ repo_variable_name }})
+    {
+        $this->{{ repo_variable_name }} = ${{ repo_variable_name }};
+    }
+
+    /**
+     * Handles data retrieval
+     * @http POST
+     * @middleware auth:sanctum
+     *
+     * @param App\Http\Requests\{{ name }}\Index $request
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function index(Index $request): JsonResponse
+    {
+        $data = $this->{{ repo_variable_name }}->index($request->validated());
+        return $this->{{ repo_variable_name }}->getJsonResponse($data);
+    }
+
+    /**
+     * Handles data storage
+     * @http POST
+     * @middleware auth:sanctum
+     *
+     * @param App\Http\Requests\{{ name }}\Store $request
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function store(Store $request): JsonResponse
+    {
+        $data = $this->{{ repo_variable_name }}->store($request->validated());
+        return $this->{{ repo_variable_name }}->getJsonResponse($data);
+    }
+
+    /**
+     * Handles data update
+     * @http PATCH
+     * @middleware auth:sanctum
+     *
+     * @param App\Http\Requests\{{ name }}\Update $request
+     * @param $id
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function update(Update $request, $id): JsonResponse
+    {
+        $data = $this->{{ repo_variable_name }}->update($request->validated(), $id);
+        return $this->{{ repo_variable_name }}->getJsonResponse($data);
+    }
+
+    /**
+     * Handles data deletion
+     * @http DELETE
+     * @middleware auth:sanctum
+     *
+     * @param App\Http\Requests\{{ name }}\Delete $request
+     * @param $id
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function delete(Delete $request, $id): JsonResponse
+    {
+        $data = $this->{{ repo_variable_name }}->delete($request->validated(), $id);
+        return $this->{{ repo_variable_name }}->getJsonResponse($data);
+    }
+}
